@@ -1,40 +1,46 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Feather from '@expo/vector-icons/Feather';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from "@/context/ThemeContext";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { darkMode } = useTheme();
 
   return (
-    <Tabs
+ <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: darkMode ? "#166534" : "#166534",
+        tabBarInactiveTintColor: darkMode ? "#aaa" : "#888",
+        tabBarStyle: {
+          backgroundColor: darkMode ? "#374151" : "whitesmoke",
+          height: 70,
+          borderTopWidth: 0,
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="Dashboard"
         options={{
-          title: 'Dashboard',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color, size }) =>  <Ionicons name="home-sharp" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="Notifications"
         options={{
           title: 'Notifications',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color,size }) => <Ionicons name="notifications" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="Settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          tabBarIcon: ({ color, size }) => <Feather name="settings" size={size} color={color} />,
         }}
       />
     </Tabs>
