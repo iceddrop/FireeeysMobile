@@ -33,6 +33,7 @@ const SignupScreen = () => {
             </Text>
           </View>
           <View style={tw`w-full `}>
+            <Text style={[darkMode ? tw`text-center text-2xl text-white font-bold py-1` : tw` py-1 text-center text-2xl text-black font-bold`]}>Register</Text>
             <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Name</Text>
             <TextInput
               placeholder="Jane Doe"
