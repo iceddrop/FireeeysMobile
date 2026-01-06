@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import { SafeAreaView } from 'react-native-safe-area-context'; 
 
 const LinkDeviceScreen = () => {
-  const [darkMode, setDarkmode] = useState(true);
+  const [darkMode, setDarkmode] = useState(false);
 
     const [fontsLoaded] = useFonts({
     PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),

@@ -8,7 +8,7 @@ import { router } from "expo-router";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignupScreen = () => {
-  const [darkMode, setDarkmode] = useState(true);
+  const [darkMode, setDarkmode] = useState(false);
   const [value, setValue] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 

@@ -42,7 +42,7 @@ const LoginScreen = () => {
         <TouchableOpacity style={tw`bg-red-600 rounded-md h-12 w-full my-4 flex items-center justify-center`}>
           <Text style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}>Login</Text>
         </TouchableOpacity>
-        <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Don't have an account? <Text style={tw`text-blue-600`} onPress={() => router.push("/LinkDevice")}>Signup</Text></Text>
+        <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Don't have an account? <Text style={tw`text-blue-600`} onPress={() => router.push("/Dashboard")}>Signup</Text></Text>
       </View>
     </SafeAreaView>
   )
