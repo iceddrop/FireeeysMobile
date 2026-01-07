@@ -20,6 +20,7 @@ export default function DashboardScreen() {
     const [value] = useState(40)
     const [warningText, setWarningText] = useState("SAFE");
     const [warningIcon, setWarningIcon] = useState("check-circle");
+    const [darkMode, setDarkMode] = useState(false)
 
     useEffect(() => {
         if (value < 30) {
@@ -37,7 +38,7 @@ export default function DashboardScreen() {
         }
     }, [value]);
     return (
-        <SafeAreaView>
+        <SafeAreaView style={[darkMode ? tw`bg-black`: tw`bg-white`]}>
             <ScrollView style={tw` px-4 h-full`}>
                 <View style={tw` h-full`}>
                     <View style={[tw`flex justify-center w-full items-center px-4 py-5 rounded-sm`, { backgroundColor }]}>
@@ -46,32 +47,32 @@ export default function DashboardScreen() {
                     </View>
                     <View style={tw`h-[25%] w-full flex flex-row justify-center items-center mt-6 border border-gray-400 rounded-md pl-18 pr-6 py-2`}>
                         <View style={tw`flex justify-between mr-6 h-full`}>
-                            <Text style={[tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
+                            <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 CO
                                 <Text style={{ fontSize: 10, lineHeight: 16 }}>
                                     2
                                 </Text>
                                 {" "}LEVEL
                             </Text>
-                            <Text style={[tw`text-gray-700  text-center`, { fontFamily: "PoppinsRegular" }]}>Normal &lt; 50PPM</Text>
+                            <Text style={[darkMode ? tw`text-white  text-center` : tw`text-gray-700  text-center`, { fontFamily: "PoppinsRegular" }]}>Normal &lt; 50PPM</Text>
                         </View>
                         <CarbonGauge value={36} max={100} label="Speed" color="#ff4d4f" />
                     </View>
                     <View style={tw`h-[25%] w-full flex flex-row justify-center items-center mt-6 border border-gray-400 rounded-md py-2 pl-18 pr-6`}>
                         <View style={tw`flex justify-between  mr-6 h-full`}>
-                            <Text style={[tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
+                            <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 METHANE LEVEL
                             </Text>
-                            <Text style={[tw`text-gray-700 `, { fontFamily: "PoppinsRegular" }]}>No Leak</Text>
+                            <Text style={[darkMode ? tw`text-white` : tw`text-gray-700`, { fontFamily: "PoppinsRegular" }]}>No Leak</Text>
                         </View>
                         <MethaneGauge value={25} max={100} label="Speed" color="#ff4d4f" />
                     </View>
                     <View style={tw`h-[25%] w-full flex flex-row justify-center items-center mt-6 border border-gray-400 rounded-md py-2 pl-18 pr-6`}>
                         <View style={tw`flex justify-between  mr-6 h-full`}>
-                            <Text style={[tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
+                            <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 TEMPERATURE
                             </Text>
-                            <Text style={[tw`text-gray-700  text-center`, { fontFamily: "PoppinsRegular" }]}>Normal Range</Text>
+                            <Text style={[darkMode ? tw`text-white  text-center` : tw`text-gray-700  text-center`, { fontFamily: "PoppinsRegular" }]}>Normal Range</Text>
                         </View>
                         <TemperatureGauge value={45} max={100} label="Speed" color="#ff4d4f" />
                     </View>

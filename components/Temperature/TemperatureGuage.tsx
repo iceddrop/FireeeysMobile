@@ -19,7 +19,7 @@ const TemperatureGauge: React.FC<SpeedGaugeProps> = ({
   const percentage = Math.min(Math.max(value, 0), max);
   const rotation = (percentage / max) * 180 - 90; // -90 to 90 degrees
 
-      const [color, setColor] = useState("bg-green-400");
+      const [color, setColor] = useState("green");
 
     useEffect(() => {
         if (value < 30) {
