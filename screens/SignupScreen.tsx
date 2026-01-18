@@ -148,6 +148,7 @@ const SignupScreen = () => {
     <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`]}>
       <ScrollView style={[darkMode ? tw`px-6` : tw` px-6`]}>
         <View style={tw`flex items-center justify-center w-full h-full`}>
+          <Toast />
           <View style={tw`flex flex-row justify-center`}>
             <Image style={tw`w-24 h-24`} source={require("../assets/images/9feae60ea81842259049ab0f27467b93-free-removebg-preview.png")} />
             <Text style={[darkMode ? tw`self-center  text-2xl font-semibold text-white` : tw`self-center  text-2xl font-semibold dark:text-white`]}>

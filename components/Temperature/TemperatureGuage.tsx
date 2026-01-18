@@ -1,11 +1,10 @@
 // components/CarbonGauge.tsx
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Path, Circle, G } from 'react-native-svg';
-import {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Svg, { Circle, G, Path } from 'react-native-svg';
 
 interface SpeedGaugeProps {
-  value: number; // 0-100
+  value?: number; // 0-100
   max?: number;
   label?: string;
   color?: string;
@@ -15,21 +14,22 @@ const TemperatureGauge: React.FC<SpeedGaugeProps> = ({
   value, 
   max = 100, 
 }) => {
-  // Ensure value is within bounds
-  const percentage = Math.min(Math.max(value, 0), max);
-  const rotation = (percentage / max) * 180 - 90; // -90 to 90 degrees
+    // Ensure value is within bounds (treat undefined as 0)
+    const safeValue = value ?? 0;
+    const percentage = Math.min(Math.max(safeValue, 0), max);
+    const rotation = (percentage / max) * 180 - 90; // -90 to 90 degrees
 
       const [color, setColor] = useState("green");
 
     useEffect(() => {
-        if (value < 30) {
-            setColor("green");
-        } else if (value < 50) {
-            setColor("#FACC15");
-        } else if (value >= 50) {
-            setColor("red");
-        }
-    }, [value]);
+      if (safeValue < 30) {
+        setColor("green");
+      } else if (safeValue < 50) {
+        setColor("#FACC15");
+      } else if (safeValue >= 50) {
+        setColor("red");
+      }
+    }, [safeValue]);
 
 
   return (

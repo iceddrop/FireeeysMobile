@@ -1,35 +1,69 @@
 // components/CarbonGauge.tsx
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Path, Circle, G } from 'react-native-svg';
-import {useEffect, useState} from "react";
+import { useGasStore } from '@/store/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Svg, { Circle, G, Path } from 'react-native-svg';
 
 interface SpeedGaugeProps {
-  value: number; // 0-100
+  value: number | undefined; // 0-100
   max?: number;
   label?: string;
   color?: string;
 }
 
-const CarbonGauge: React.FC<SpeedGaugeProps> = ({ 
-  value, 
-  max = 100, 
+const CarbonGauge: React.FC<SpeedGaugeProps> = ({
+  value = 0,
+  max = 100,
 }) => {
+
+  const { gasData, fetchGasData } = useGasStore();
   // Ensure value is within bounds
-  const percentage = Math.min(Math.max(value, 0), max);
+  const percentage = Math.min(Math.max(value ?? 0, 0), max);
   const rotation = (percentage / max) * 180 - 90; // -90 to 90 degrees
 
-      const [color, setColor] = useState("green");
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [macAddress, setMacAddress] = useState<string | null>(null);
+  const [color, setColor] = useState("green");
 
-    useEffect(() => {
-        if (value < 30) {
-            setColor("green");
-        } else if (value < 50) {
-            setColor("#FACC15");
-        } else if (value >= 50) {
-            setColor("red");
-        }
-    }, [value]);
+  useEffect(() => {
+    let mounted = true;
+    const controller = new AbortController();
+    let id: number | null = null;
+
+    const loadAndFetch = async () => {
+      try {
+        const ph = await AsyncStorage.getItem("phonenumber");
+        const mac = await AsyncStorage.getItem("macAddress");
+        if (!mounted) return;
+        setPhoneNumber(ph);
+        setMacAddress(mac);
+        if (!ph || !mac) return;
+        fetchGasData(ph, mac, controller.signal);
+        id = setInterval(() => fetchGasData(ph, mac, controller.signal), 5000) as unknown as number;
+      } catch (e) {
+        // ignore
+      }
+    };
+
+    loadAndFetch();
+
+    return () => {
+      mounted = false;
+      if (id !== null) clearInterval(id as any);
+      controller.abort();
+    };
+  }, [fetchGasData]);
+
+  useEffect(() => {
+    if (value < 30) {
+      setColor("green");
+    } else if (value < 50) {
+      setColor("#FACC15");
+    } else if (value >= 50) {
+      setColor("red");
+    }
+  }, [value]);
 
 
   return (
@@ -44,7 +78,7 @@ const CarbonGauge: React.FC<SpeedGaugeProps> = ({
           strokeWidth={12}
           strokeLinecap="round"
         />
-        
+
         {/* Colored progress arc */}
         <Path
           d="M 20 80 A 80 80 0 0 1 180 80"
