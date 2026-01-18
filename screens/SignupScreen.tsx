@@ -133,12 +133,13 @@ const SignupScreen = () => {
           // error.response?.data ||
           error.message
         );
+
+        Toast.show({
+          type: "error",
+          text1: 'Error occured' + error.message
+        });
       }
 
-      Toast.show({
-        type: "error",
-        text1: 'Error occured"'
-      });
     } finally {
       setLoading(false);
     }
