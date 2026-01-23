@@ -9,6 +9,7 @@ import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import { useGasStore } from '@/store/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -88,6 +89,7 @@ export default function DashboardScreen() {
     console.log(gasData)
     return (
         <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`]}>
+            <StatusBar style={darkMode ? "light" : "dark"} />
             <ScrollView style={tw` px-4 h-full`}>
                 <View style={tw` h-full`}>
                     <View style={[tw`flex justify-center w-full items-center px-4 py-5 rounded-sm`, { backgroundColor }]}>

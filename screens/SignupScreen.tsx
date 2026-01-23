@@ -1,15 +1,26 @@
-
 import backendInstance from "@/api/AxiosInstance";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, FlatList, Image, Modal, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import tw from "twrnc";
 
 const SignupScreen = () => {
-  const [darkMode, setDarkmode] = useState(false);
+  const [darkMode, setDarkmode] = useState(true);
   const [value, setValue] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -22,7 +33,7 @@ const SignupScreen = () => {
     notificationPreference: "SMS",
     otp: "",
     emailVerificationCode: "",
-  })
+  });
 
   const [fontsLoaded] = useFonts({
     PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
@@ -30,11 +41,9 @@ const SignupScreen = () => {
   });
 
   const options = [
-    { label: 'SMS', value: 'SMS' },
-    { label: 'EMAIL', value: 'EMAIL' },
+    { label: "SMS", value: "SMS" },
+    { label: "EMAIL", value: "EMAIL" },
   ];
-
-
 
   const [otpLoadingState, setOtpLoadingState] = useState({
     sms: false,
@@ -45,28 +54,26 @@ const SignupScreen = () => {
   const [loading, setLoading] = useState(false);
   const [color] = useState("#ffffff");
 
-
   const handleChange = (name: string, val: string) => {
     setFormData({ ...formData, [name]: val });
   };
-
 
   const handleSendOtp = async () => {
     try {
       setOtpLoadingState({ ...otpLoadingState, sms: true });
       const response = await backendInstance.post(
-        `/user/sendOtp/${formData.phonenumber}`
+        `/user/sendOtp/${formData.phonenumber}`,
       );
       console.log(response);
 
       Toast.show({
         type: "success",
-        text1: 'SMS OTP sent successfully!'
+        text1: "SMS OTP sent successfully!",
       });
     } catch (error) {
       Toast.show({
         type: "error",
-        text1: 'Failed to send SMS OTP."'
+        text1: 'Failed to send SMS OTP."',
       });
     } finally {
       setOtpLoadingState({ ...otpLoadingState, sms: false });
@@ -77,19 +84,17 @@ const SignupScreen = () => {
     try {
       setOtpLoadingState({ ...otpLoadingState, email: true });
       const response = await backendInstance.post(
-        `/user/sendOtpToEmail/${encodeURIComponent(
-          formData.email
-        )}`
+        `/user/sendOtpToEmail/${encodeURIComponent(formData.email)}`,
       );
       console.log(response);
       Toast.show({
-        type: 'success',
-        text1: '"Email OTP sent successfully!"'
+        type: "success",
+        text1: '"Email OTP sent successfully!"',
       });
     } catch (error) {
       Toast.show({
         type: "error",
-        text1: 'Error occured"'
+        text1: 'Error occured"',
       });
     } finally {
       setOtpLoadingState({ ...otpLoadingState, email: false });
@@ -106,40 +111,37 @@ const SignupScreen = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (
         response.status === 200 &&
         response.data === " User registered successfully."
       ) {
-
         Toast.show({
           type: "success",
-          text1: "Registration Successful!"
+          text1: "Registration Successful!",
         });
-        router.push("/Login");;
+        router.push("/Login");
       } else {
-
         Toast.show({
           type: "error",
-          text1: "Registration failed: " + response.data
+          text1: "Registration failed: " + response.data,
         });
-        router.push("/Login");;
+        router.push("/Login");
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(
           "Registration error:",
           // error.response?.data ||
-          error.message
+          error.message,
         );
 
         Toast.show({
           type: "error",
-          text1: 'Error occured' + error.message
+          text1: "Error occured" + error.message,
         });
       }
-
     } finally {
       setLoading(false);
     }
@@ -147,75 +149,124 @@ const SignupScreen = () => {
 
   return (
     <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`]}>
+      <StatusBar style={darkMode ? "light" : "dark"} />
       <ScrollView style={[darkMode ? tw`px-6` : tw` px-6`]}>
         <View style={tw`flex items-center justify-center w-full h-full`}>
           <Toast />
           <View style={tw`flex flex-row justify-center`}>
-            <Image style={tw`w-24 h-24`} source={require("../assets/images/9feae60ea81842259049ab0f27467b93-free-removebg-preview.png")} />
-            <Text style={[darkMode ? tw`self-center  text-2xl font-semibold text-white` : tw`self-center  text-2xl font-semibold dark:text-white`]}>
+            <Image
+              style={tw`w-24 h-24`}
+              source={require("../assets/images/9feae60ea81842259049ab0f27467b93-free-removebg-preview.png")}
+            />
+            <Text
+              style={[
+                darkMode
+                  ? tw`self-center  text-2xl font-semibold text-white`
+                  : tw`self-center  text-2xl font-semibold dark:text-white`,
+              ]}
+            >
               Fire <Text style={tw` text-red-600 `}>Eyes</Text>
             </Text>
           </View>
           <View style={tw`w-full `}>
-            <Text style={[darkMode ? tw`text-center text-2xl text-white font-bold py-1` : tw` py-1 text-center text-2xl text-black font-bold`]}>Register</Text>
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Name</Text>
+            <Text
+              style={[
+                darkMode
+                  ? tw`text-center text-2xl text-white font-bold py-1`
+                  : tw` py-1 text-center text-2xl text-black font-bold`,
+              ]}
+            >
+              Register
+            </Text>
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              Name
+            </Text>
             <TextInput
               placeholder="Jane Doe"
               placeholderTextColor="#B2BEB5"
               value={formData.name}
-              onChangeText={(t) => handleChange('name', t)}
-              style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black` : tw`h-12 rounded-md px-4 bg-black text-white`]}
+              onChangeText={(t) => handleChange("name", t)}
+              style={[
+                darkMode
+                  ? tw`h-12 rounded-md px-4 bg-white text-black`
+                  : tw`h-12 rounded-md px-4 bg-black text-white`,
+              ]}
             />
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Email</Text>
-            <View style={tw`flex flex-row`}>
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              Email
+            </Text>
+            
               <TextInput
                 placeholder="Johndoe@gmail.com"
                 placeholderTextColor="#B2BEB5"
                 value={formData.email}
-                onChangeText={(t) => handleChange('email', t)}
-                style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black w-60` : tw`h-12 rounded-md px-4 bg-black text-white w-60`]}
+                onChangeText={(t) => handleChange("email", t)}
+                style={[
+                  darkMode
+                    ? tw`h-12 rounded-md px-4 bg-white text-black `
+                    : tw`h-12 rounded-md px-4 bg-black text-white `,
+                ]}
               />
-              <TouchableOpacity
-                onPress={handleSendEmailOtp}
-                disabled={otpLoadingState.email}
-                style={[tw`bg-red-600 rounded-md h-12 px-4 ml-2 flex items-center justify-center`, otpLoadingState.email && { opacity: 0.6 }]}
-              >
-                {otpLoadingState.email ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  <Text style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}>Send OTP</Text>
-                )}
-              </TouchableOpacity>
-            </View>
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Phone Number</Text>
-            <View style={tw`flex flex-row `}>
+
+            
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              Phone Number
+            </Text>
+            
               <TextInput
                 placeholder="+234"
                 placeholderTextColor="#B2BEB5"
                 value={formData.phonenumber}
-                onChangeText={(t) => handleChange('phonenumber', t)}
-                style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black w-60` : tw`h-12 rounded-md px-4 bg-black text-white w-60`]}
+                onChangeText={(t) => handleChange("phonenumber", t)}
+                style={[
+                  darkMode
+                    ? tw`h-12 rounded-md px-4 bg-white text-black `
+                    : tw`h-12 rounded-md px-4 bg-black text-white `,
+                ]}
               />
-              <TouchableOpacity
-                onPress={handleSendOtp}
-                disabled={otpLoadingState.sms}
-                style={[tw`bg-red-600 rounded-md h-12 px-4 ml-2 flex items-center justify-center`, otpLoadingState.sms && { opacity: 0.6 }]}
-              >
-                {otpLoadingState.sms ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  <Text style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}>Send OTP</Text>
-                )}
-              </TouchableOpacity>
-            </View>
+           
             <View style={tw`w-full my-2`}>
-              <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>How'd you like to get notifications?</Text>
+              <Text
+                style={[
+                  darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                  { fontFamily: "PoppinsRegular" },
+                ]}
+              >
+                How'd you like to get notifications?
+              </Text>
               <Pressable
                 onPress={() => setOpen(true)}
-                style={[darkMode ? tw`border border-gray-300 rounded-lg px-4 py-3 bg-white` : tw`border border-gray-300 rounded-lg px-4 py-3 bg-black`]}
+                style={[
+                  darkMode
+                    ? tw`border border-gray-300 rounded-lg px-4 py-3 bg-white`
+                    : tw`border border-gray-300 rounded-lg px-4 py-3 bg-black`,
+                ]}
               >
-                <Text style={[darkMode ? tw`text-base text-black` : tw`text-base text-white`]}>
-                  {value ?? formData.notificationPreference ?? 'Select language'}
+                <Text
+                  style={[
+                    darkMode
+                      ? tw`text-base text-black`
+                      : tw`text-base text-white`,
+                  ]}
+                >
+                  {value ??
+                    formData.notificationPreference ??
+                    "Select language"}
                 </Text>
               </Pressable>
 
@@ -228,8 +279,19 @@ const SignupScreen = () => {
                 />
 
                 {/* Bottom Sheet */}
-                <View style={[darkMode ? tw`bg-black px-4 pt-4 pb-6 rounded-t-2xl` : tw`bg-white px-4 pt-4 pb-6 rounded-t-2xl`]}>
-                  <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>
+                <View
+                  style={[
+                    darkMode
+                      ? tw`bg-black px-4 pt-4 pb-6 rounded-t-2xl`
+                      : tw`bg-white px-4 pt-4 pb-6 rounded-t-2xl`,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                      { fontFamily: "PoppinsRegular" },
+                    ]}
+                  >
                     How'd you like to get your notifications?
                   </Text>
 
@@ -243,12 +305,21 @@ const SignupScreen = () => {
                       <Pressable
                         onPress={() => {
                           setValue(item.value);
-                          setFormData({ ...formData, notificationPreference: item.value });
+                          setFormData({
+                            ...formData,
+                            notificationPreference: item.value,
+                          });
                           setOpen(false);
                         }}
                         style={tw`py-4`}
                       >
-                        <Text style={[darkMode ? tw`text-base text-white` : tw`text-base text-black`]}>
+                        <Text
+                          style={[
+                            darkMode
+                              ? tw`text-base text-white`
+                              : tw`text-base text-black`,
+                          ]}
+                        >
                           {item.label}
                         </Text>
                       </Pressable>
@@ -257,48 +328,141 @@ const SignupScreen = () => {
                 </View>
               </Modal>
             </View>
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Password</Text>
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              Password
+            </Text>
             <TextInput
               placeholder="XXXXX"
               placeholderTextColor="#B2BEB5"
               secureTextEntry
               value={formData.password}
-              onChangeText={(t) => handleChange('password', t)}
-              style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black w-full` : tw`h-12 rounded-md px-4 bg-black text-white w-full`]}
+              onChangeText={(t) => handleChange("password", t)}
+              style={[
+                darkMode
+                  ? tw`h-12 rounded-md px-4 bg-white text-black w-full`
+                  : tw`h-12 rounded-md px-4 bg-black text-white w-full`,
+              ]}
             />
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>SMS OTP</Text>
-            <TextInput
-              placeholder=""
-              placeholderTextColor="#B2BEB5"
-              value={formData.otp}
-              onChangeText={(t) => handleChange('otp', t)}
-              style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black w-full` : tw`h-12 rounded-md px-4 bg-black text-white w-full`]}
-            />
-            <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Email OTP</Text>
-            <TextInput
-              placeholder=""
-              placeholderTextColor="#B2BEB5"
-              value={formData.emailVerificationCode}
-              onChangeText={(t) => handleChange('emailVerificationCode', t)}
-              style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black w-full` : tw`h-12 rounded-md px-4 bg-black text-white w-full`]}
-            />
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              SMS OTP
+            </Text>
+            <View style={tw`flex flex-row justify-between`}>
+              <TextInput
+                placeholder="Enter SMS OTP"
+                placeholderTextColor="#B2BEB5"
+                value={formData.otp}
+                onChangeText={(t) => handleChange("otp", t)}
+                style={[
+                  darkMode
+                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56`
+                    : tw`h-12 rounded-md px-4 bg-black text-white w-56`,
+                ]}
+              />
+
+              <TouchableOpacity
+                onPress={handleSendOtp}
+                disabled={otpLoadingState.sms}
+                style={[
+                  tw`bg-red-600 rounded-md h-12 px-4 flex items-center justify-center`,
+                  otpLoadingState.sms && { opacity: 0.6 },
+                ]}
+              >
+                {otpLoadingState.sms ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}
+                  >
+                    Send OTP
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+
+            <Text
+              style={[
+                darkMode ? tw`text-white py-2` : tw`text-black py-2`,
+                { fontFamily: "PoppinsRegular" },
+              ]}
+            >
+              Email OTP
+            </Text>
+            <View style={tw`flex flex-row justify-between`}>
+              <TextInput
+                placeholder="Enter Email OTP"
+                placeholderTextColor="#B2BEB5"
+                value={formData.emailVerificationCode}
+                onChangeText={(t) => handleChange("emailVerificationCode", t)}
+                style={[
+                  darkMode
+                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56`
+                    : tw`h-12 rounded-md px-4 bg-black text-white w-56`,
+                ]}
+              />
+
+              <TouchableOpacity
+                onPress={handleSendEmailOtp}
+                disabled={otpLoadingState.email}
+                style={[
+                  tw`bg-red-600 rounded-md h-12 px-4 flex items-center justify-center`,
+                  otpLoadingState.email && { opacity: 0.6 },
+                ]}
+              >
+                {otpLoadingState.email ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}
+                  >
+                    Send OTP
+                  </Text>
+                )}
+              </TouchableOpacity>
+
+            </View>
           </View>
           <TouchableOpacity
             onPress={handleSubmit}
             disabled={loading}
-            style={[tw`bg-red-600 rounded-md h-12 w-full my-4 flex items-center justify-center`, loading && { opacity: 0.6 }]}
+            style={[
+              tw`bg-red-600 rounded-md h-12 w-full my-4 flex items-center justify-center`,
+              loading && { opacity: 0.6 },
+            ]}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}>Signup</Text>
+              <Text style={[tw`text-white`, { fontFamily: "PoppinsRegular" }]}>
+                Signup      </Text>
             )}
           </TouchableOpacity>
-          <Text style={[darkMode ? tw`text-white pb-2` : tw`text-black pb-2`, { fontFamily: "PoppinsRegular" }]}>Already have an account? <Text style={tw`text-blue-600`} onPress={() => router.push("/Login")}>Login</Text></Text>
+          <Text
+            style={[
+              darkMode ? tw`text-white pb-2` : tw`text-black pb-2`,
+              { fontFamily: "PoppinsRegular", flexShrink: 1 },
+            ]}
+          >
+            Already have an account?{" "}
+            <Text
+              style={tw`text-blue-600`}
+              onPress={() => router.push("/Login")}
+            >
+              Login         </Text>
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default SignupScreen
+export default SignupScreen;
