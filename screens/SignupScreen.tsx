@@ -18,9 +18,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import tw from "twrnc";
+import { useTheme } from "@/context/ThemeContext";
 
 const SignupScreen = () => {
-  const [darkMode, setDarkmode] = useState(true);
+  const { darkMode } = useTheme();
   const [value, setValue] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -73,7 +74,7 @@ const SignupScreen = () => {
     } catch (error) {
       Toast.show({
         type: "error",
-        text1: 'Failed to send SMS OTP."',
+        text1: 'Failed to send SMS OTP' + error,
       });
     } finally {
       setOtpLoadingState({ ...otpLoadingState, sms: false });
@@ -94,7 +95,7 @@ const SignupScreen = () => {
     } catch (error) {
       Toast.show({
         type: "error",
-        text1: 'Error occured"',
+        text1: 'Error occured' + error,
       });
     } finally {
       setOtpLoadingState({ ...otpLoadingState, email: false });
@@ -364,8 +365,8 @@ const SignupScreen = () => {
                 onChangeText={(t) => handleChange("otp", t)}
                 style={[
                   darkMode
-                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56`
-                    : tw`h-12 rounded-md px-4 bg-black text-white w-56`,
+                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56 mr-1`
+                    : tw`h-12 rounded-md px-4 bg-black text-white w-56 mr-1`,
                 ]}
               />
 
@@ -405,8 +406,8 @@ const SignupScreen = () => {
                 onChangeText={(t) => handleChange("emailVerificationCode", t)}
                 style={[
                   darkMode
-                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56`
-                    : tw`h-12 rounded-md px-4 bg-black text-white w-56`,
+                    ? tw`h-12 rounded-md px-4 bg-white text-black w-56 mr-1`
+                    : tw`h-12 rounded-md px-4 bg-black text-white w-56 mr-1`,
                 ]}
               />
 

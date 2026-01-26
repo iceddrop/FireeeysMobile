@@ -8,8 +8,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from "react-native-toast-message";
 import tw from "twrnc";
 
+import { useTheme } from "@/context/ThemeContext";
+
 const LinkDeviceScreen = () => {
-  const [darkMode, setDarkmode] = useState(false);
+  const { darkMode } = useTheme();
 
   const [fontsLoaded] = useFonts({
     PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),

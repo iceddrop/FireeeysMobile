@@ -1,13 +1,15 @@
+import Feather from '@expo/vector-icons/Feather';
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Tabs } from 'expo-router';
 import React from 'react';
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Feather from '@expo/vector-icons/Feather';
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useState} from "react";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function TabLayout() {
+  // const { darkMode } = useTheme();
+  const insets = useSafeAreaInsets();
   const { darkMode } = useTheme();
-
   return (
  <Tabs
       screenOptions={{
@@ -17,8 +19,16 @@ export default function TabLayout() {
         tabBarInactiveTintColor: darkMode ? "#aaa" : "#888",
         tabBarStyle: {
           backgroundColor: darkMode ? "#374151" : "whitesmoke",
-          height: 70,
+          height: 70 + insets.bottom,
           borderTopWidth: 0,
+          paddingBottom: insets.bottom,
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+        sceneStyle: {
+          paddingBottom: 70 + insets.bottom,
         },
       }}
     >

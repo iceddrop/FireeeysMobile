@@ -3,9 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
+import { StatusBar } from 'expo-status-bar';
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
-import { StatusBar } from 'expo-status-bar';
 import {
   ActivityIndicator,
   Image,
@@ -19,8 +19,10 @@ import Toast from "react-native-toast-message";
 import tw from "twrnc";
 import { JwtPayload } from "../types/login.types";
 
+import { useTheme } from "@/context/ThemeContext";
+
 const LoginScreen = () => {
-  const [darkMode, setDarkmode] = useState(true);
+  const { darkMode } = useTheme();
 
   const [fontsLoaded] = useFonts({
     PoppinsRegular: require("../assets/fonts/Poppins-Regular.ttf"),
