@@ -118,10 +118,10 @@ const LinkDeviceScreen = () => {
           <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>MAC Address</Text>
           <TextInput
             placeholder="EC:XX:XX:XX:XX"
-            placeholderTextColor="#B2BEB5"
+            placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
             value={macAddress}
             onChangeText={handleChange}
-            style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black` : tw`h-12 rounded-md px-4 bg-black text-white`]}
+            style={[darkMode ? tw`h-12 rounded-md px-4 bg-white text-black` : tw`h-12 rounded-md px-4 bg-gray-400 text-white`]}
           />
             <TouchableOpacity
               onPress={handleSubmit}

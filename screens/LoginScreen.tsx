@@ -139,12 +139,12 @@ const LoginScreen = () => {
           </Text>
           <TextInput
             placeholder="+234"
-            placeholderTextColor="#B2BEB5"
+            placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
             onChangeText={(t) => handleChange("phoneNumber", t)}
             style={[
               darkMode
                 ? tw`h-12 rounded-md px-4 bg-white text-black`
-                : tw`h-12 rounded-md px-4 bg-black text-white`,
+                : tw`h-12 rounded-md px-4 bg-gray-400 text-white`,
             ]}
           />
 
@@ -158,12 +158,12 @@ const LoginScreen = () => {
           </Text>
           <TextInput
             placeholder="XXXXX"
-            placeholderTextColor="#B2BEB5"
+            placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
             onChangeText={(t) => handleChange("password", t)}
             style={[
               darkMode
                 ? tw`h-12 rounded-md px-4 bg-white text-black w-full`
-                : tw`h-12 rounded-md px-4 bg-black text-white w-full`,
+                : tw`h-12 rounded-md px-4 bg-gray-400 text-white w-full`,
             ]}
           />
         </View>
@@ -191,7 +191,8 @@ const LoginScreen = () => {
         >
           Don't have an account?{" "}
           <Text style={tw`text-blue-600`} onPress={() => router.push("/")}>
-            Signup     </Text>
+            Signup
+          </Text>
         </Text>
       </View>
     </SafeAreaView>

@@ -128,7 +128,7 @@ const SignupScreen = () => {
           type: "error",
           text1: "Registration failed: " + response.data,
         });
-        router.push("/Login");
+        router.push("/");
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -189,13 +189,13 @@ const SignupScreen = () => {
             </Text>
             <TextInput
               placeholder="Jane Doe"
-              placeholderTextColor="#B2BEB5"
+              placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
               value={formData.name}
               onChangeText={(t) => handleChange("name", t)}
               style={[
                 darkMode
                   ? tw`h-12 rounded-md px-4 bg-white text-black`
-                  : tw`h-12 rounded-md px-4 bg-black text-white`,
+                  : tw`h-12 rounded-md px-4 bg-gray-400 text-white`,
               ]}
             />
             <Text
@@ -206,20 +206,20 @@ const SignupScreen = () => {
             >
               Email
             </Text>
-            
-              <TextInput
-                placeholder="Johndoe@gmail.com"
-                placeholderTextColor="#B2BEB5"
-                value={formData.email}
-                onChangeText={(t) => handleChange("email", t)}
-                style={[
-                  darkMode
-                    ? tw`h-12 rounded-md px-4 bg-white text-black `
-                    : tw`h-12 rounded-md px-4 bg-black text-white `,
-                ]}
-              />
 
-            
+            <TextInput
+              placeholder="Johndoe@gmail.com"
+              placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
+              value={formData.email}
+              onChangeText={(t) => handleChange("email", t)}
+              style={[
+                darkMode
+                  ? tw`h-12 rounded-md px-4 bg-white text-black `
+                  : tw`h-12 rounded-md px-4 bg-gray-400 text-white `,
+              ]}
+            />
+
+
             <Text
               style={[
                 darkMode ? tw`text-white py-2` : tw`text-black py-2`,
@@ -228,19 +228,19 @@ const SignupScreen = () => {
             >
               Phone Number
             </Text>
-            
-              <TextInput
-                placeholder="+234"
-                placeholderTextColor="#B2BEB5"
-                value={formData.phonenumber}
-                onChangeText={(t) => handleChange("phonenumber", t)}
-                style={[
-                  darkMode
-                    ? tw`h-12 rounded-md px-4 bg-white text-black `
-                    : tw`h-12 rounded-md px-4 bg-black text-white `,
-                ]}
-              />
-           
+
+            <TextInput
+              placeholder="+234"
+              placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
+              value={formData.phonenumber}
+              onChangeText={(t) => handleChange("phonenumber", t)}
+              style={[
+                darkMode
+                  ? tw`h-12 rounded-md px-4 bg-white text-black `
+                  : tw`h-12 rounded-md px-4 bg-gray-400 text-white `,
+              ]}
+            />
+
             <View style={tw`w-full my-2`}>
               <Text
                 style={[
@@ -255,7 +255,7 @@ const SignupScreen = () => {
                 style={[
                   darkMode
                     ? tw`border border-gray-300 rounded-lg px-4 py-3 bg-white`
-                    : tw`border border-gray-300 rounded-lg px-4 py-3 bg-black`,
+                    : tw`border border-gray-300 rounded-lg px-4 py-3 bg-gray-400`,
                 ]}
               >
                 <Text
@@ -339,14 +339,14 @@ const SignupScreen = () => {
             </Text>
             <TextInput
               placeholder="XXXXX"
-              placeholderTextColor="#B2BEB5"
+              placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
               secureTextEntry
               value={formData.password}
               onChangeText={(t) => handleChange("password", t)}
               style={[
                 darkMode
                   ? tw`h-12 rounded-md px-4 bg-white text-black w-full`
-                  : tw`h-12 rounded-md px-4 bg-black text-white w-full`,
+                  : tw`h-12 rounded-md px-4 bg-gray-400 text-white w-full`,
               ]}
             />
             <Text
@@ -360,13 +360,13 @@ const SignupScreen = () => {
             <View style={tw`flex flex-row justify-between`}>
               <TextInput
                 placeholder="Enter SMS OTP"
-                placeholderTextColor="#B2BEB5"
+                placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
                 value={formData.otp}
                 onChangeText={(t) => handleChange("otp", t)}
                 style={[
                   darkMode
                     ? tw`h-12 rounded-md px-4 bg-white text-black w-56 mr-1`
-                    : tw`h-12 rounded-md px-4 bg-black text-white w-56 mr-1`,
+                    : tw`h-12 rounded-md px-4 bg-gray-400 text-white w-56 mr-1`,
                 ]}
               />
 
@@ -401,13 +401,13 @@ const SignupScreen = () => {
             <View style={tw`flex flex-row justify-between`}>
               <TextInput
                 placeholder="Enter Email OTP"
-                placeholderTextColor="#B2BEB5"
+                placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
                 value={formData.emailVerificationCode}
                 onChangeText={(t) => handleChange("emailVerificationCode", t)}
                 style={[
                   darkMode
                     ? tw`h-12 rounded-md px-4 bg-white text-black w-56 mr-1`
-                    : tw`h-12 rounded-md px-4 bg-black text-white w-56 mr-1`,
+                    : tw`h-12 rounded-md px-4 bg-gray-400 text-white w-56 mr-1`,
                 ]}
               />
 
@@ -447,19 +447,23 @@ const SignupScreen = () => {
                 Signup      </Text>
             )}
           </TouchableOpacity>
-          <Text
-            style={[
-              darkMode ? tw`text-white pb-2` : tw`text-black pb-2`,
-              { fontFamily: "PoppinsRegular", flexShrink: 1 },
-            ]}
-          >
-            Already have an account?{" "}
+          <View style={tw`flex flex-row justify-center`}>
             <Text
-              style={tw`text-blue-600`}
               onPress={() => router.push("/Login")}
+              style={[
+                darkMode ? tw`text-white pb-2` : tw`text-black pb-2`,
+                { fontFamily: "PoppinsRegular", flexShrink: 1 },
+              ]}
             >
-              Login         </Text>
-          </Text>
+              Already have an account?{" "}
+            </Text>
+            <Text onPress={() => router.push("/Login")}
+              style={tw`text-blue-600`}
+
+            >
+              Login{" "}
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

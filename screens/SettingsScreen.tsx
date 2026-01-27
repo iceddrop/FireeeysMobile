@@ -98,7 +98,7 @@ export default function SettingsScreen() {
                             <View style={tw`flex justify-between flex-row `}>
                                 <Pressable
                                     style={tw`bg-red-600 rounded-md px-4 py-2 m-2`}
-                                    onPress={() => logout()}>
+                                    onPress={() => {logout() ; setModalVisible(false)}}>
                                     <Text style={styles.textStyle}>Yes</Text>
                                 </Pressable>
                                 <Pressable

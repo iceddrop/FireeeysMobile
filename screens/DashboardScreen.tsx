@@ -121,7 +121,7 @@ export default function DashboardScreen() {
                     </View>
                     <View style={tw`h-[25%] w-full flex flex-row items-center mt-6 border border-gray-400 rounded-md py-2 `}>
                         <View style={tw`flex justify-between  h-full`}>
-                            <Text onPress={() => router.push('/Login')} style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
+                            <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 TEMPERATURE
                             </Text>
                             <Text style={[darkMode ? tw`text-white  text-center pl-1` : tw`text-gray-700  text-center pl-1`, { fontFamily: "PoppinsRegular" }]}>Normal &lt; 30°C</Text>
