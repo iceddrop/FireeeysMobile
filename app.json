@@ -1,4 +1,5 @@
 {
+  "icon": "./assets/images/9feae60ea81842259049ab0f27467b93-free-removebg-preview.png",
   "expo": {
     "name": "fireeyes",
     "slug": "fireeyes",
@@ -7,7 +8,7 @@
     "icon": "./assets/images/9feae60ea81842259049ab0f27467b93-free-removebg-preview.png",
     "scheme": "fireeyes",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
