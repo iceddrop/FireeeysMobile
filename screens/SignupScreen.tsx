@@ -128,7 +128,7 @@ const SignupScreen = () => {
           type: "error",
           text1: "Registration failed: " + response.data,
         });
-        router.push("/");
+        router.push("/Login");
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -458,7 +458,7 @@ const SignupScreen = () => {
               Already have an account?{" "}
             </Text>
             <Text onPress={() => router.push("/Login")}
-              style={tw`text-blue-600`}
+              style={[tw`text-blue-600`, { fontFamily: "PoppinsRegular" }]}
 
             >
               Login{" "}
