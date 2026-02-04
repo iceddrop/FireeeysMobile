@@ -58,7 +58,7 @@ const CarbonGauge: React.FC<SpeedGaugeProps> = ({
   useEffect(() => {
     if (value < 30) {
       setColor("green");
-    } else if (value < 50) {
+    } else if (value >= 30) {
       setColor("#FACC15");
     } else if (value >= 50) {
       setColor("red");

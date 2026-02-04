@@ -22,11 +22,10 @@ const MethaneGauge: React.FC<SpeedGaugeProps> = ({
       const [color, setColor] = useState("green");
 
     useEffect(() => {
-        if (safeValue > 30) {
+        if (safeValue > 50) {
             setColor("green");
-        } else if (safeValue < 30) {
-            setColor("#FACC15");
-        } else if (safeValue <= 10) {
+        }
+        else if (safeValue <= 50) {
             setColor("red");
         }
     }, [value]);
