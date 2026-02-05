@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const backendInstance = axios.create({
-  baseURL: "https://fireeye-a6asgba2cag6gtdx.canadacentral-01.azurewebsites.net",
+  baseURL: "https://copper-imprint-479922-p4.uc.r.appspot.com",
   headers: { "Content-Type": "application/json" },
 });
 
