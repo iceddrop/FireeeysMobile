@@ -1,8 +1,11 @@
 import backendInstance from "@/api/AxiosInstance";
+import { useTheme } from "@/context/ThemeContext";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
+import { useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   ActivityIndicator,
   FlatList,
@@ -18,7 +21,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import tw from "twrnc";
-import { useTheme } from "@/context/ThemeContext";
 
 const SignupScreen = () => {
   const { darkMode } = useTheme();
@@ -54,6 +56,7 @@ const SignupScreen = () => {
   const [error] = useState("");
   const [loading, setLoading] = useState(false);
   const [color] = useState("#ffffff");
+  const [passwordHidden, setPasswordHidden] = useState(false)
 
   const handleChange = (name: string, val: string) => {
     setFormData({ ...formData, [name]: val });
@@ -151,7 +154,8 @@ const SignupScreen = () => {
   return (
     <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`]}>
       <StatusBar style={darkMode ? "light" : "dark"} />
-      <ScrollView style={[darkMode ? tw`px-6` : tw` px-6`]}>
+  
+        <KeyboardAwareScrollView style={[darkMode ? tw`px-6` : tw` px-6`]} keyboardShouldPersistTaps="handled">
         <View style={tw`flex items-center justify-center w-full h-full`}>
           <Toast />
           <View style={tw`flex flex-row justify-center`}>
@@ -337,18 +341,21 @@ const SignupScreen = () => {
             >
               Password
             </Text>
-            <TextInput
-              placeholder="XXXXX"
-              placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
-              secureTextEntry
-              value={formData.password}
-              onChangeText={(t) => handleChange("password", t)}
-              style={[
-                darkMode
-                  ? tw`h-12 rounded-md px-4 bg-white text-black w-full`
-                  : tw`h-12 rounded-md px-4 bg-gray-400 text-white w-full`,
-              ]}
-            />
+            <View style={darkMode ? tw`flex flex-row items-center bg-white rounded-md` : tw`flex flex-row items-center bg-gray-400 rounded-md`}>
+              <TextInput
+                placeholder="XXXXX"
+                placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
+                secureTextEntry={passwordHidden}
+                value={formData.password}
+                onChangeText={(t) => handleChange("password", t)}
+                style={[
+                  darkMode
+                    ? tw`h-12 rounded-l-md px-4 bg-white text-black w-[90%]`
+                    : tw`h-12 rounded-l-md px-4 bg-gray-400 text-white w-[90%]`,
+                ]}
+              />
+              <AntDesign onPress={() => setPasswordHidden(!passwordHidden)} name={passwordHidden ? "eye" : "eye-invisible"} size={24} color="black" style={tw`mr-4`}/>
+            </View>
             <Text
               style={[
                 darkMode ? tw`text-white py-2` : tw`text-black py-2`,
@@ -465,7 +472,8 @@ const SignupScreen = () => {
             </Text>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+   
     </SafeAreaView>
   );
 };

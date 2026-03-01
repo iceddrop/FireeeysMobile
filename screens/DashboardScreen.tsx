@@ -41,12 +41,11 @@ export default function DashboardScreen() {
     const router = useRouter();
     const { gasData, fetchGasData } = useGasStore();
     const { userData, fetchUserDetails } = useUserStore();
+    const [error, setError] = useState()
 
-    console.log(userData)
-    console.log("gas data", gasData)
+
     const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
     const [macAddress, setMacAddress] = useState<string | null>(null);
-    const [color, setColor] = useState("green");
 
     useEffect(() => {
         let mounted = true;
@@ -87,8 +86,7 @@ export default function DashboardScreen() {
         if (!gd) return;
 
         const { co2, co2Threshold } = gd;
-        console.log(co2Threshold)
-        console.log(co2)
+    
         // ensure values are defined (allow 0) then check all < 30
         if (co2 != null && co2Threshold != null) {
             if (co2 < co2Threshold) {
