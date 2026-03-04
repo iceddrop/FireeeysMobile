@@ -20,6 +20,50 @@ type State = {
   ) => Promise<void>;
 };
 
+interface SignUpState {
+  name: string;
+  phonenumber: string;
+  email: string;
+  password: string;
+  notificationPreference: string;
+  otp: string;
+  emailVerificationCode: string;
+}
+
+interface SignupStore {
+  formData: SignUpState;
+  setFormData: (data: Partial<SignUpState>) => void;
+  clearFormData: () => void;
+}
+
+export const useSignupStore = create<SignupStore>((set) => ({
+  formData: {
+    name: "",
+    phonenumber: "",
+    email: "",
+    password: "",
+    notificationPreference: "",
+    otp: "",
+    emailVerificationCode: "",
+  },
+  setFormData: (data) =>
+    set((state) => ({
+      formData: { ...state.formData, ...data },
+    })),
+  clearFormData: () =>
+    set({
+      formData: {
+        name: "",
+        phonenumber: "",
+        email: "",
+        password: "",
+        notificationPreference: "",
+        otp: "",
+        emailVerificationCode: "",
+      },
+    }),
+}));
+
 export const useGasStore = create<State>((set) => ({
   gasData: null,
   loading: false,

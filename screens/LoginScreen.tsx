@@ -36,6 +36,7 @@ const LoginScreen = () => {
   });
 
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [color] = useState("#ffffff");
   const router = useRouter();
@@ -45,65 +46,83 @@ const LoginScreen = () => {
     setFormData({ ...formData, [name]: val });
   };
 
-  const handleLogin = async () => {
-    setError("");
+  const validate = () => {
 
-    try {
-      setLoading(true);
-
-      const response = await backendInstance.post("/user/auth/login", formData);
-
-      const data = response.data;
-
-      const token = data.token;
-      if (!token) {
-        throw new Error("No token returned from server");
-      }
-      await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("phonenumber", formData.phoneNumber);
-      const decoded = jwtDecode<JwtPayload>(token);
-
-      const user = {
-        phoneNumber: decoded.phoneNumber,
-        name: decoded.name,
-        role: decoded.role || "ROLE_USER",
-        isVerified: decoded.isVerified ?? true,
-      };
-
-      await AsyncStorage.setItem("user", JSON.stringify(user));
-      await AsyncStorage.setItem("role", user.role);
-
-      if (user.role === "ROLE_ADMIN") {
-        router.push("/Dashboard");
-      } else {
-        router.push("/LinkDevice");
-      }
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        console.error("Login axios error:", err.response || err);
-        const serverMessage = err.response?.data?.message || err.message;
-        Toast.show({
-          type: "error",
-          text1: serverMessage,
-        });
-      } else if (err instanceof Error) {
-        Toast.show({
-          type: "error",
-          text1: err.message,
-        });
-      } else {
-        Toast.show({
-          type: "error",
-          text1: "Error! Try again",
-        });
-      }
-    } finally {
-      setLoading(false);
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.phoneNumber) {
+      newErrors.phonenumber = "phone number is required";
     }
+
+    if (!formData.password) {
+      newErrors.password = "password is required"
+    }
+
+    return newErrors;
   };
 
+  const handleLogin = async () => {
+
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        setLoading(true);
+
+        const response = await backendInstance.post("/user/auth/login", formData);
+
+        const data = response.data;
+
+        const token = data.token;
+        if (!token) {
+          throw new Error("No token returned from server");
+        }
+        await AsyncStorage.setItem("token", token);
+        await AsyncStorage.setItem("phonenumber", formData.phoneNumber);
+        const decoded = jwtDecode<JwtPayload>(token);
+
+        const user = {
+          phoneNumber: decoded.phoneNumber,
+          name: decoded.name,
+          role: decoded.role || "ROLE_USER",
+          isVerified: decoded.isVerified ?? true,
+        };
+
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+        await AsyncStorage.setItem("role", user.role);
+
+        if (user.role === "ROLE_ADMIN") {
+          router.push("/Dashboard");
+        } else {
+          router.push("/LinkDevice");
+        }
+      } catch (err: any) {
+        if (err.response?.status === 401) {
+          Toast.show({
+            type: "error",
+            text1: "Phone number is not registered, Sign up!",
+          });
+        } else {
+          Toast.show({
+            type: "error",
+            text1: "Some error occured, Please try again.",
+          });
+        }
+      } finally {
+        setLoading(false);
+      }
+    } else if (Object.keys(validationErrors).length > 0) {
+      Object.values(validationErrors).forEach((err) => {
+        Toast.show({
+          type: "error",
+          text1: "Error occured: " + err,
+        });
+      })
+    };
+  }
+
   return (
-    <SafeAreaView style={[darkMode ? tw`bg-black px-6` : tw`bg-white px-6`]}>
+    <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`]}>
       <StatusBar style={darkMode ? "light" : "dark"} />
       <KeyboardAwareScrollView style={[darkMode ? tw`px-6 h-full` : tw` px-6 h-full`]} keyboardShouldPersistTaps="handled">
         <View style={tw`flex items-center justify-center w-full h-full`}>
@@ -142,7 +161,7 @@ const LoginScreen = () => {
               Phone Number
             </Text>
             <TextInput
-              placeholder="+234"
+              placeholder="080XXXXXXXX"
               placeholderTextColor={darkMode ? "#B2BEB5" : "#374151"}
               onChangeText={(t) => handleChange("phoneNumber", t)}
               style={[
@@ -211,7 +230,7 @@ const LoginScreen = () => {
             </Text>
           </Text>
         </View>
-    </KeyboardAwareScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView >
   );
 };
