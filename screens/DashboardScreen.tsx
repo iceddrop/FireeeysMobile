@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import tw from "twrnc";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface User {
     name: string;
@@ -86,7 +88,7 @@ export default function DashboardScreen() {
         if (!gd) return;
 
         const { co2, co2Threshold } = gd;
-    
+
         // ensure values are defined (allow 0) then check all < 30
         if (co2 != null && co2Threshold != null) {
             if (co2 < co2Threshold) {
@@ -143,16 +145,27 @@ export default function DashboardScreen() {
     //         controller.abort();
     //     };
     // }, [ph, mac]);
-    // console.log("User Data:", userData);
+    console.log("gas Data:", gasData);
     return (
         <SafeAreaView style={[darkMode ? tw`bg-black` : tw`bg-white`, { flex: 1 }]}>
             <StatusBar style={darkMode ? "light" : "dark"} />
-            <ScrollView style={tw`px-4`} contentContainerStyle={tw`pb-32`} scrollEnabled={true}>
+            <ScrollView style={tw`px-4`} contentContainerStyle={tw`pb-42`} scrollEnabled={true}>
                 <View style={tw``}>
                     <Text style={[darkMode ? tw`text-white py-3` : tw`text-black py-3`, { fontFamily: "PoppinsBold" }]}>Welcome {userData?.user?.name}</Text>
-                    <View style={[tw`flex justify-center w-full items-center px-4 py-5 rounded-sm`, { backgroundColor }]}>
-                        <Text style={[tw`text-white font-bold text-lg`, { fontFamily: "PoppinsBold" }]}>{warningText}</Text>
-                        <AntDesign name={warningIcon as any} size={24} color="white" style={tw`mt-3`} />
+                    <View style={[tw`flex flex-row justify-between w-full items-center px-4 py-5 rounded-md h-[20%]`, { backgroundColor }]}>
+                        <View style={tw`flex justify-between  h-full`}>
+                            <Text style={[tw`text-white font-bold text-lg`, { fontFamily: "PoppinsBold" }]}>{warningText}</Text>
+                            <AntDesign name={warningIcon as any} size={24} color="white" style={tw`mt-3`} />
+                        </View>
+                        <View style={tw`justify-between h-full w-[30%]`}>
+                            <View style={tw`flex flex-row justify-end`}>
+                                <MaterialCommunityIcons name="network-strength-4" size={10} color="white" style={tw`mr-3`}/>
+                                <Ionicons name="battery-full" size={10} color="white" />
+                            </View>
+                            <View style={tw`flex flex-row justify-end`}>
+                                <Text style={[tw`text-white  text-xs`, { fontFamily: "PoppinsRegular" }]}>Threshold {gasData?.data?.co2Threshold}</Text>
+                            </View>
+                        </View>
                     </View>
                     <View style={tw`h-[25%] w-full flex flex-row  items-center mt-6 border border-gray-400 rounded-md  py-2`}>
                         <View style={tw`flex justify-between h-full`}>

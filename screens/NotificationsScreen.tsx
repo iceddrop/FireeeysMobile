@@ -1,9 +1,10 @@
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import { useTheme } from "@/context/ThemeContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import tw from "twrnc";
 import { useFonts } from "expo-font";
+
 
 export default function NotificationsScreen() {
     const { darkMode } = useTheme();
@@ -22,8 +23,12 @@ export default function NotificationsScreen() {
                 <View style={tw`flex-row items-center p-4 space-x-2`}>
                     <Text style={[darkMode ? tw`text-white font-bold text-lg` : tw`text-black font-bold text-lg`, { fontFamily: "PoppinsBold" }]}>Notifications</Text>
                 </View>
-                                <View style={tw`flex-row items-center justify-center p-4 space-x-2`}>
-                    <Text style={[darkMode ? tw`text-white font-bold text-lg` : tw`text-black font-bold text-lg`, { fontFamily: "PoppinsBold" }]}>No Notifications Yet!</Text>
+                <View style={tw` flex items-center justify-center p-4 space-x-2`}>
+                    <Image
+                        source={require("../assets/images/chatbox.png")}
+                        style={tw`flex justify-center w-96 h-96`}
+                    />
+                    <Text style={[darkMode ? tw` text-white font-bold text-lg` : tw`text-black font-bold text-lg`, { fontFamily: "PoppinsBold" }]}>No Notifications Yet!</Text>
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -91,7 +91,7 @@ const ForgotPasswordScreen = () => {
           </Text>
         </View>
         <View style={tw`w-full `}>
-          <Text style={[darkMode ? tw`text-center text-2xl text-white font-bold py-1` : tw` py-1 text-center text-2xl text-black font-bold`]}>Reset Your password</Text>
+          <Text style={[darkMode ? tw`text-center text-2xl text-white font-bold py-1` : tw` py-1 text-center text-2xl text-black font-bold`]}>Forgot Password</Text>
           <Text style={[darkMode ? tw`text-white py-2` : tw`text-black py-2`, { fontFamily: "PoppinsRegular" }]}>Email Address</Text>
           <TextInput
             placeholder="johndoe@gmail.com"

@@ -1,7 +1,6 @@
 import backendInstance from "@/api/AxiosInstance";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
 import { StatusBar } from 'expo-status-bar';
@@ -35,7 +34,6 @@ const LoginScreen = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [color] = useState("#ffffff");
