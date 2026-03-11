@@ -167,7 +167,7 @@ export default function DashboardScreen() {
                             </View>
                         </View>
                     </View>
-                    <View style={tw`h-[25%] w-full flex flex-row  items-center mt-6 border border-gray-400 rounded-md  py-2`}>
+                    <View style={tw`h-[25%] w-full flex flex-row justify-between  items-center mt-6 border border-gray-400 rounded-md  py-2`}>
                         <View style={tw`flex justify-between h-full`}>
                             <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 CO
@@ -180,7 +180,7 @@ export default function DashboardScreen() {
                         </View>
                         <CarbonGauge value={gasData?.data?.co2} max={100} label="Speed" color="#ff4d4f" />
                     </View>
-                    <View style={tw`h-[25%] w-full flex flex-row  items-center mt-6 border border-gray-400 rounded-md py-2 `}>
+                    <View style={tw`h-[25%] w-full flex flex-row justify-between  items-center mt-6 border border-gray-400 rounded-md py-2 `}>
                         <View style={tw`flex justify-between   h-full`}>
                             <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 HUMIDITY LEVEL
@@ -189,7 +189,7 @@ export default function DashboardScreen() {
                         </View>
                         <MethaneGauge value={gasData?.data?.humidity} max={100} label="Speed" color="#ff4d4f" />
                     </View>
-                    <View style={tw`h-[25%] w-full flex flex-row items-center mt-6 border border-gray-400 rounded-md py-2 `}>
+                    <View style={tw`h-[25%] w-full flex flex-row justify-between items-center mt-6 border border-gray-400 rounded-md py-2 `}>
                         <View style={tw`flex justify-between  h-full`}>
                             <Text style={[darkMode ? tw`text-white font-bold text-md mb-2 border-b border-white text-center` : tw`text-gray-700 font-bold text-md mb-2 border-b text-center`, { fontFamily: "PoppinsBold" }]}>
                                 TEMPERATURE

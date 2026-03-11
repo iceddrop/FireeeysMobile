@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Octicons from '@expo/vector-icons/Octicons';
 import tw from "twrnc";
 export default function SettingsScreen() {
     const [fontsLoaded] = useFonts({
@@ -23,6 +24,7 @@ export default function SettingsScreen() {
     const { logout } = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
     const [openModalTwo, setOpenModalTwo] = useState(false);
+    const [openModalThree, setOpenModalThree] = useState(false);
     const deviceId = "F1:EE:34:23:48:C8";
     const [userData, setUserData] = useState<UserData | null>(null);
     const [deviceDetails, setDeviceDetails] = useState({
@@ -110,7 +112,7 @@ export default function SettingsScreen() {
                         <View style={[darkMode ? tw`flex-row justify-between items-center p-4 border-b border-white` : tw`flex-row justify-between items-center p-4 border-b border-gray-500`]}>
                             <View style={tw`flex-row items-center `}>
                                 <Ionicons name="person" size={24} color={darkMode ? "white" : "gray"} />
-                                <Text style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Profile</Text>
+                                <Text onPress={() => setOpenModalThree(true)} style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Profile</Text>
                             </View>
                             <Ionicons name="chevron-forward-circle-sharp" size={24} color={darkMode ? "white" : "gray"} />
                         </View>
@@ -150,7 +152,7 @@ export default function SettingsScreen() {
                         <View style={[darkMode ? tw`flex-row justify-between items-center p-4  border-b border-white ` : tw`flex-row justify-between items-center p-4 border-b border-gray-500`]}>
                             <View style={tw`flex-row items-center `}>
                                 <Ionicons name="person" size={24} color={darkMode ? "white" : "gray"} />
-                                <Text style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Profile Settings</Text>
+                                <Text onPress={() => setOpenModalThree(true)} style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Profile Settings</Text>
                             </View>
                             <Ionicons name="chevron-forward-circle-sharp" size={24} color={darkMode ? "white" : "gray"} />
                         </View>
@@ -168,7 +170,7 @@ export default function SettingsScreen() {
                         <View style={[darkMode ? tw`flex-row justify-between items-center p-4 border-b border-white` : tw`flex-row justify-between items-center p-4 border-b border-gray-700`]}>
                             <View style={tw`flex-row items-center `}>
                                 <AntDesign name="customer-service" size={24} color={darkMode ? "white" : "gray"} />
-                                <Text style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Customer Service</Text>
+                                <Text onPress={() => setOpenModalThree(true)} style={[darkMode ? tw`text-white font-bold pl-2` : tw`text-gray-700 font-bold pl-2`]}>Customer Service</Text>
                             </View>
                             <Ionicons name="chevron-forward-circle-sharp" size={24} color={darkMode ? "white" : "gray"} />
                         </View>
@@ -305,6 +307,28 @@ export default function SettingsScreen() {
                                     style={tw`bg-blue-600 rounded-md px-4 py-2 m-2`}
                                     onPress={() => setModalVisible(!modalVisible)}>
                                     <Text style={styles.textStyle}>No</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={openModalThree}
+                    onRequestClose={() => {
+                        setOpenModalThree(!openModalThree);
+                    }}>
+                    <View style={styles.centeredView}>
+                        <View style={[darkMode ? tw`bg-gray-800` : tw`bg-white`, styles.modalView]}>
+                            <Octicons name="copilot-warning" size={24} color={darkMode ? "white" : "gray"} />
+                            <Text style={[darkMode ? tw`text-white my-3` : tw`text-black my-3`, styles.modalText]}>Feature is still in development</Text>
+                            <View style={tw`flex justify-center flex-row `}>
+                                <Pressable
+                                    style={tw`bg-blue-600 rounded-md px-4 py-2 m-2`}
+                                    onPress={() => setOpenModalThree(!openModalThree)}>
+                                    <Text style={styles.textStyle}>Ok</Text>
                                 </Pressable>
                             </View>
                         </View>

@@ -98,7 +98,7 @@ const LoginScreen = () => {
         if (err.response?.status === 401) {
           Toast.show({
             type: "error",
-            text1: "Phone number is not registered, Sign up!",
+            text1: "Unable to login with details, check and try again!",
           });
         } else {
           Toast.show({
@@ -223,7 +223,7 @@ const LoginScreen = () => {
             ]}
           >
             Don't have an account?{" "}
-            <Text style={tw`text-blue-600`} onPress={() => router.push("/")}>
+            <Text style={tw`text-blue-600`} onPress={() => router.push("/(auth)")}>
               Signup
             </Text>
           </Text>

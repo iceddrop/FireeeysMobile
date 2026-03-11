@@ -54,7 +54,6 @@ const SignupScreenTwo = () => {
     const [error] = useState("");
     const [loading, setLoading] = useState(false);
     const [color] = useState("#ffffff");
-    const [passwordHidden, setPasswordHidden] = useState(false)
 
     const handleChange = (name: string, val: string) => {
         setForm({ ...form, [name]: val });
