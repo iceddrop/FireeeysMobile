@@ -273,9 +273,9 @@ export default function SettingsScreen() {
                             />
                             <View style={tw`flex justify-between flex-row `}>
                                 <Pressable
-                                    style={tw`bg-red-600 rounded-md px-4 py-2 m-2`}
+                                    style={loading ? tw`bg-red-400 rounded-md px-4 py-2 m-2` : tw`bg-red-600 rounded-md px-4 py-2 m-2`}
                                     onPress={() => updateDeviceDetails()}>
-                                    <Text style={styles.textStyle}>Update</Text>
+                                    <Text style={styles.textStyle}>{loading ? "Loading" : "Update"}</Text>
                                 </Pressable>
                                 <Pressable
                                     style={tw`bg-blue-600 rounded-md px-4 py-2 m-2`}
