@@ -21,13 +21,13 @@ import Toast from "react-native-toast-message";
 import tw from "twrnc";
 import { useSignupStore } from "../store/store";
 const SignupScreenTwo = () => {
-    const { formData } = useSignupStore();
 
+    const { formData } = useSignupStore();
 
     const [form, setForm] = useState({
         notificationPreference: "SMS",
         otp: "",
-        emailVerificationCode: "",
+     
     })
     const { darkMode } = useTheme();
     const [value, setValue] = useState<string | null>(null);
@@ -121,10 +121,6 @@ const SignupScreenTwo = () => {
         const newErrors: { [key: string]: string } = {};
         if (!form.otp) {
             newErrors.otp = "otp is required";
-        }
-
-        if (!form.emailVerificationCode) {
-            newErrors.emailVerificationCode = "email otp is required"
         }
 
         return newErrors;
@@ -352,7 +348,7 @@ const SignupScreenTwo = () => {
                             </TouchableOpacity>
                         </View>
 
-                        <Text
+                        {/* <Text
                             style={[
                                 darkMode ? tw`text-white py-2` : tw`text-black py-2`,
                                 { fontFamily: "PoppinsRegular" },
@@ -392,7 +388,7 @@ const SignupScreenTwo = () => {
                                 )}
                             </TouchableOpacity>
 
-                        </View>
+                        </View> */}
                     </View>
                     <View style={tw`flex flex-row justify-center pt-2`}>
                         <Text
